@@ -81,17 +81,18 @@
         <th>grnd level</th>
         <!-- Added column for weather condition -->
       </tr>
-      {% for day in weather %}
+
+      {% for day in weather %} {% set temperature_class = 'cold' if day.temperature < 10 else 'cool' if day.temperature < 20 else 'moderate' if day.temperature < 25 else 'warm' if day.temperature < 30 else 'hot' %}
       <tr>
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.date }}</td>
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.temperature }}</td>
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.humidity }}</td>
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.pressure }}</td>
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.wind_speed }}</td>
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.weather_condition }}</td>
+        <td class="{{temperature_class}}">{{ day.date }}</td>
+        <td class="{{temperature_class}}">{{ day.temperature }}</td>
+        <td class="{{temperature_class}}">{{ day.humidity }}</td>
+        <td class="{{temperature_class}}">{{ day.pressure }}</td>
+        <td class="{{temperature_class}}">{{ day.wind_speed }}</td>
+        <td class="{{temperature_class}}">{{ day.weather_condition }}</td>
         <!-- Display weather condition -->
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.sea_level }}</td>
-        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.grnd_level }}</td>
+        <td class="{{temperature_class}}">{{ day.sea_level }}</td>
+        <td class="{{temperature_class}}">{{ day.grnd_level }}</td>
       </tr>
       {% endfor %}
     </table>
