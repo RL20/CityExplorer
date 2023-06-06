@@ -77,6 +77,8 @@
         <th>Pressure</th>
         <th>Wind Speed</th>
         <th>Weather Condition</th>
+        <th>sea level</th>
+        <th>grnd level</th>
         <!-- Added column for weather condition -->
       </tr>
       {% for day in weather %}
@@ -88,6 +90,8 @@
         <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.wind_speed }}</td>
         <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.weather_condition }}</td>
         <!-- Display weather condition -->
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.sea_level }}</td>
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.grnd_level }}</td>
       </tr>
       {% endfor %}
     </table>

@@ -28,6 +28,9 @@ def get_weather(api_key, city, language="en", num_days=8):
                 "pressure": forecast["main"]["pressure"],
                 "wind_speed": forecast["wind"]["speed"],
                 "weather_condition": forecast["weather"][0]["description"],
+                "sea_level": forecast["main"]["sea_level"],
+                "grnd_level": forecast["main"]["grnd_level"],
+                "wind_speed": forecast["wind"]["speed"],
             }
             weather_info.append(weather)
 
