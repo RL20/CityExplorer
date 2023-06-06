@@ -19,6 +19,9 @@ def get_weather(api_key, city, language="en", num_days=8):
     if response.status_code == 200:
         city_name = data["city"]["name"]
         country_name = data["city"]["country"]
+        sunrise = data["city"]["sunrise"]
+        sunset = data["city"]["sunset"]
+        timezone = data["city"]["timezone"]
         weather_info = []
         for forecast in data["list"]:
             weather = {
@@ -34,7 +37,7 @@ def get_weather(api_key, city, language="en", num_days=8):
             }
             weather_info.append(weather)
 
-        return city_name, country_name, weather_info[:num_days]
+        return city_name, country_name,sunrise,sunset,timezone, weather_info[:num_days]
     else:
         return None, None, None
 
@@ -48,9 +51,9 @@ def index():
         api_key = "a9709dfa8608c8b21d7da65cc345af77"
 
         # Get weather data for the entered city (English)
-        city, country, weather_data = get_weather(api_key, city_name, "en")
+        city, country,sunrise,sunset,timezone, weather_data = get_weather(api_key, city_name, "en")
         if weather_data is not None:
-            return render_template('weather.html', city=city, country=country, weather=weather_data)
+            return render_template('weather.html', city=city, country=country,sunrise=sunrise,sunset=sunset,timezone=timezone, weather=weather_data)
         else:
             error_message = "Failed to retrieve weather data for " + city_name
             return render_template('error.html', error=error_message)
