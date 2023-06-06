@@ -1,7 +1,7 @@
 
 # CityExplorer+
 
-CityExplorer+ is a feature-rich application designed for tourists and individuals exploring unfamiliar cities. This application provides users with essential information to enhance their travel experience.
+CityExplorer+ is a feature-rich Flask application designed for tourists and individuals exploring unfamiliar cities. This application provides users with essential information to enhance their travel experience.
 
 ## Features
 
@@ -13,20 +13,12 @@ CityExplorer+ is a feature-rich application designed for tourists and individual
 
 ## Installation
 
-1. Clone the repository:
-git clone https://github.com/your-username/CityExplorerPlus.git
+1. Clone the repository →:  git clone https://github.com/your-username/CityExplorerPlus.git
 
 
+2. Install the required dependencies →:  pip install -r requirements.txt
 
-2. Install the required dependencies:
-npm install
-
-
- 
-
-3. Launch the application:
-npm start
-
+3. Launch the application →:  flask run
 
 
 ## Usage
