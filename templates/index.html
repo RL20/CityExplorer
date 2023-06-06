@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather App</title>
+    <style>
+      body {
+        background-image: url("../assets/images/weather.jpg");
+        background-size: cover;
+        background-position: center;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        text-align: center;
+        margin-top: 150px;
+      }
+
+      .form {
+        margin-top: 20px;
+      }
+
+      .form input[type="text"] {
+        padding: 5px;
+        margin-right: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      .form button {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+
+      .form button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather App</h1>
+      <form class="form" method="POST" action="/">
+        <label for="city">Enter city name:</label>
+        <input type="text" id="city" name="city" required />
+        <button type="submit">Get Weather</button>
+      </form>
+    </div>
+  </body>
+</html>

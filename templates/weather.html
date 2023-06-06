@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather App</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:not(:first-child):hover {
+        background-color: #ddd;
+      }
+
+      tr:not(:first-child):hover td {
+        background-color: initial;
+      }
+
+      .cold {
+        background-color: #c2e0ff;
+      }
+
+      .cool {
+        background-color: #d1ffd1;
+      }
+
+      .moderate {
+        background-color: #fdffd1;
+      }
+
+      .warm {
+        background-color: #ffd1a3;
+      }
+
+      .hot {
+        background-color: #ff9b9b;
+      }
+
+      .legend {
+        margin-top: 20px;
+      }
+
+      .legend-item {
+        display: inline-block;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .color-box {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">Go back to homepage</a>
+    <h1>Weather forecast for {{ city }} in {{ country }}</h1>
+
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Temperature</th>
+        <th>Humidity</th>
+        <th>Pressure</th>
+        <th>Wind Speed</th>
+        <th>Weather Condition</th>
+        <!-- Added column for weather condition -->
+      </tr>
+      {% for day in weather %}
+      <tr>
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.date }}</td>
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.temperature }}</td>
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.humidity }}</td>
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.pressure }}</td>
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.wind_speed }}</td>
+        <td class="{% if day.temperature < 10 %}cold{% elif day.temperature < 20 %}cool{% elif day.temperature < 25 %}moderate{% elif day.temperature < 30 %}warm{% else %}hot{% endif %}">{{ day.weather_condition }}</td>
+        <!-- Display weather condition -->
+      </tr>
+      {% endfor %}
+    </table>
+
+    <div class="legend">
+      <span class="legend-item">Temperature Color Legend:</span>
+      <span class="legend-item"> <span class="color-box" style="background-color: #c2e0ff"></span> Cold </span>
+      <span class="legend-item"> <span class="color-box" style="background-color: #d1ffd1"></span> Cool </span>
+      <span class="legend-item"> <span class="color-box" style="background-color: #fdffd1"></span> Moderate </span>
+      <span class="legend-item"> <span class="color-box" style="background-color: #ffd1a3"></span> Warm </span>
+      <span class="legend-item"> <span class="color-box" style="background-color: #ff9b9b"></span> Hot </span>
+    </div>
+  </body>
+</html>
