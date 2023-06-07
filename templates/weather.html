@@ -77,9 +77,11 @@
     <a href="/">Go back to homepage</a>
     <h1>Weather forecast for {{ city }} in {{ country }}</h1>
 
-    <!-- <h3 class="sun-info"><strong>Sunrise:</strong> {{ sunrise }} &nbsp;&nbsp; <strong>Sunset:</strong> {{ sunset }} &nbsp;&nbsp; <strong>Timezone:</strong> {{ timezone }}</h3> -->
     <!-- Modify the h3 element where the sunrise, sunset, and timezone are displayed -->
-    <h3 class="sun-info" data-sunrise="{{ sunrise }}" data-sunset="{{ sunset }}" data-timezone="{{ timezone }}"><strong>Sunrise:</strong> <span id="sunrise"></span>&nbsp;&nbsp; <strong>Sunset:</strong> <span id="sunset"></span>&nbsp;&nbsp; <strong>Timezone:</strong> <span id="timezone"></span></h3>
+    <h3 class="sun-info">
+      <strong>Sunrise:</strong> <span id="sunrise"></span> &nbsp;&nbsp; <strong>Sunset:</strong>
+      <span id="sunset"></span> &nbsp;&nbsp; <strong>Timezone:</strong> <span id="timezone"></span>
+    </h3>
     <table>
       <tr>
         <th>Date</th>
@@ -93,7 +95,9 @@
         <!-- Added column for weather condition -->
       </tr>
 
-      {% for day in weather %} {% set temperature_class = 'cold' if day.temperature < 10 else 'cool' if day.temperature < 20 else 'moderate' if day.temperature < 25 else 'warm' if day.temperature < 30 else 'hot' %}
+      {% for day in weather %} {% set temperature_class = 'cold' if day.temperature < 10 else 'cool'
+      if day.temperature < 20 else 'moderate' if day.temperature < 25 else 'warm' if day.temperature
+      < 30 else 'hot' %}
       <tr>
         <td class="{{temperature_class}}">{{ day.date }}</td>
         <td class="{{temperature_class}}">{{ day.temperature }}</td>
@@ -110,34 +114,51 @@
 
     <div class="legend">
       <span class="legend-item">Temperature Color Legend:</span>
-      <span class="legend-item"> <span class="color-box" style="background-color: #c2e0ff"></span> Cold </span>
-      <span class="legend-item"> <span class="color-box" style="background-color: #d1ffd1"></span> Cool </span>
-      <span class="legend-item"> <span class="color-box" style="background-color: #fdffd1"></span> Moderate </span>
-      <span class="legend-item"> <span class="color-box" style="background-color: #ffd1a3"></span> Warm </span>
-      <span class="legend-item"> <span class="color-box" style="background-color: #ff9b9b"></span> Hot </span>
+      <span class="legend-item">
+        <span class="color-box" style="background-color: #c2e0ff"></span> Cold
+      </span>
+      <span class="legend-item">
+        <span class="color-box" style="background-color: #d1ffd1"></span> Cool
+      </span>
+      <span class="legend-item">
+        <span class="color-box" style="background-color: #fdffd1"></span> Moderate
+      </span>
+      <span class="legend-item">
+        <span class="color-box" style="background-color: #ffd1a3"></span> Warm
+      </span>
+      <span class="legend-item">
+        <span class="color-box" style="background-color: #ff9b9b"></span> Hot
+      </span>
     </div>
+    <!-- Add a script to convert timestamps to local time -->
     <script>
-      // Get the sunrise, sunset, and timezone values from data attributes
-      var sunriseTimestamp = parseInt(document.querySelector(".sun-info").getAttribute("data-sunrise"));
-      var sunsetTimestamp = parseInt(document.querySelector(".sun-info").getAttribute("data-sunset"));
-      var timezone = parseInt(document.querySelector(".sun-info").getAttribute("data-timezone"));
-      console.log("timezone", timezone);
+      var sunriseTimestamp = {{ sunrise }} * 1000; // Convert seconds to milliseconds
+      var sunsetTimestamp = {{ sunset }} * 1000; // Convert seconds to milliseconds
+      var timezoneOffsetSeconds = {{ timezone }}; // Timezone offset in seconds
 
-      // Convert timestamps to Date objects
-      var sunriseDate = new Date(sunriseTimestamp * 1000);
-      var sunsetDate = new Date(sunsetTimestamp * 1000);
+      // Create Date objects with the converted timestamps
+      var sunriseDate = new Date(sunriseTimestamp);
+      var sunsetDate = new Date(sunsetTimestamp);
 
-      // Format sunrise and sunset times
-      var sunriseTime = sunriseDate.toLocaleTimeString();
-      var sunsetTime = sunsetDate.toLocaleTimeString();
+      // Apply the timezone offset to the Date objects
+      sunriseDate.setSeconds(sunriseDate.getSeconds() + timezoneOffsetSeconds);
+      sunsetDate.setSeconds(sunsetDate.getSeconds() + timezoneOffsetSeconds);
 
-      // Format timezone
-      var timezoneString = new Date().toLocaleString("en-US", { timeZone: "UTC", timeZoneName: "short" });
+      // Format the sunrise and sunset times with the desired timezone
+      var sunriseTime = sunriseDate.toLocaleTimeString([], { timeZone: 'UTC', timeStyle: 'short' });
+      var sunsetTime = sunsetDate.toLocaleTimeString([], { timeZone: 'UTC', timeStyle: 'short' });
 
-      // Update HTML elements with formatted values
+      // Convert the timezone offset from seconds to the desired format
+      var timezoneOffsetHours = Math.floor(Math.abs(timezoneOffsetSeconds) / 3600);
+      var timezoneOffsetMinutes = Math.floor((Math.abs(timezoneOffsetSeconds) % 3600) / 60);
+      var timezoneOffsetString = (timezoneOffsetSeconds >= 0 ? '+' : '-') +
+        ('0' + timezoneOffsetHours).slice(-2) + ':' +
+        ('0' + timezoneOffsetMinutes).slice(-2);
+
+      // Update the HTML elements with the formatted time and timezone values
       document.getElementById("sunrise").textContent = sunriseTime;
       document.getElementById("sunset").textContent = sunsetTime;
-      document.getElementById("timezone").textContent = timezoneString;
+      document.getElementById("timezone").textContent = timezoneOffsetString;
     </script>
   </body>
 </html>
