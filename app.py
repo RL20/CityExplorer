@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-
+import datetime
 import requests
 
 app = Flask(__name__, static_folder='/assets')
@@ -52,8 +52,15 @@ def index():
 
         # Get weather data for the entered city (English)
         city, country,sunrise,sunset,timezone, weather_data = get_weather(api_key, city_name, "en")
+
+        # Convert the timestamp to a datetime object
+        datetime_obj = datetime.datetime.fromtimestamp(sunrise)
+
+        # Retrieve the date from the datetime object
+        date = datetime_obj.date()
+
         if weather_data is not None:
-            return render_template('weather.html', city=city, country=country,sunrise=sunrise,sunset=sunset,timezone=timezone, weather=weather_data)
+            return render_template('weather.html',date=date, city=city, country=country,sunrise=sunrise,sunset=sunset,timezone=timezone, weather=weather_data)
         else:
             error_message = "Failed to retrieve weather data for " + city_name
             return render_template('error.html', error=error_message)
