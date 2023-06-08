@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import datetime
 import requests
+import os
+from config import API_KEY
 
 app = Flask(__name__, static_folder='/assets')
 def get_weather(api_key, city, language="en", num_days=8):
@@ -47,11 +49,8 @@ def index():
         # Get the city name entered by the user
         city_name = request.form['city']
 
-        # API key
-        api_key = "a9709dfa8608c8b21d7da65cc345af77"
-
         # Get weather data for the entered city (English)
-        city, country,sunrise,sunset,timezone, weather_data = get_weather(api_key, city_name, "en")
+        city, country,sunrise,sunset,timezone, weather_data = get_weather(API_KEY, city_name, "en")
 
         # Convert the timestamp to a datetime object
         datetime_obj = datetime.datetime.fromtimestamp(sunrise)
@@ -69,11 +68,8 @@ def index():
 
 @app.route('/weather/<city>', methods=['GET'])
 def weather_by_city(city):
-    # API key
-    api_key = "a9709dfa8608c8b21d7da65cc345af77"
-
     # Get weather data for the specified city (English)
-    city, country, weather_data = get_weather(api_key, city, "en")
+    city, country, weather_data = get_weather(API_KEY, city, "en")
     if weather_data is not None:
         return render_template('weather.html', city=city, country=country, weather=weather_data)
     else:
@@ -82,11 +78,8 @@ def weather_by_city(city):
 
 @app.route('/weather/<city>/<language>', methods=['GET'])
 def weather_by_city_and_language(city, language):
-    # API key
-    api_key = "a9709dfa8608c8b21d7da65cc345af77"
-
     # Get weather data for the specified city and language
-    city, country, weather_data = get_weather(api_key, city, language)
+    city, country, weather_data = get_weather(API_KEY, city, language)
     if weather_data is not None:
         return render_template('weather.html', city=city, country=country, weather=weather_data)
     else:
