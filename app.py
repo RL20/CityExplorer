@@ -3,9 +3,20 @@ import datetime
 import requests
 import os
 from config import API_KEY
+import cachetools
+
 
 app = Flask(__name__, static_folder='/assets')
+
+# Create the cache with a maximum size of 1000 entries and 15-minute TTL
+cache = cachetools.TTLCache(maxsize=1000, ttl=900)
+
 def get_weather(api_key, city, language="en", num_days=8):
+    # Check if the weather data is already cached
+    cached_data = cache.get(city)
+    if cached_data:
+        return cached_data
+
     base_url = "http://api.openweathermap.org/data/2.5/forecast"
     params = {
         "q": city,
@@ -39,6 +50,8 @@ def get_weather(api_key, city, language="en", num_days=8):
             }
             weather_info.append(weather)
 
+        # Cache the weather data
+        cache[city] = (city_name, country_name, sunrise, sunset, timezone, weather_info[:num_days])
         return city_name, country_name,sunrise,sunset,timezone, weather_info[:num_days]
     else:
         return None, None, None
