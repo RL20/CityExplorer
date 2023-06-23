@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv("/home/ubuntu/.env") # Created from userdata
 
 # MySQL database configuration
 DB_USER = os.getenv('DB_USER')
