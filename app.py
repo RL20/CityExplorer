@@ -89,7 +89,10 @@ def get_weather(api_key, city, language = "en", num_days=8):
         weather_info.append(weather)
 
     return city_name, country_name, sunrise, sunset, timezone, weather_info[:num_days]
-       
+
+@app.route('/health', methods=['GET'])
+def health(): 
+    return "ok"
 
 @app.route('/', methods=['GET'])
 def index():
